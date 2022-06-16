@@ -12,7 +12,7 @@ var GenreSchema = new Schema (
 GenreSchema
 .virtual('url')
 .get(function() {
-    return 'inventory/genre' + this._id;
+    return 'imdb/genre/' + this._id;
 });
 
 module.exports = mongoose.model('Genre', GenreSchema);

@@ -108,16 +108,16 @@ function createGenreNetworks(cb) {
 function createTvshows(cb) {
     async.parallel([
         function(callback) {
-          tvshowCreate('Friends', 'Follow the lives of six reckless adults living in Manhattan, as they indulge in adventures which make their lives both troublesome and happening.', '12', networks[1], [genres[0],], callback);
+          tvshowCreate('Friends', 'Follow the lives of six reckless adults living in Manhattan, as they indulge in adventures which make their lives both troublesome and happening.', '12', networks[1], genres[0], callback);
         },
         function(callback) {
-          tvshowCreate("Cheers", 'A group of people from different paths of life meet at Cheers, a bar run by Sam in Boston, and share their experiences while working and drinking at the bar.', '7', networks[0], [genres[0],], callback);
+          tvshowCreate("Cheers", 'A group of people from different paths of life meet at Cheers, a bar run by Sam in Boston, and share their experiences while working and drinking at the bar.', '7', networks[0], genres[0], callback);
         },
         function(callback) {
-          tvshowCreate("Breaking Bad", 'Walter White, a chemistry teacher, discovers that he has cancer and decides to get into the meth-making business to repay his medical debts. His priorities begin to change when he partners with Jesse.', '10', networks[2], [genres[1],], callback);
+          tvshowCreate("Breaking Bad", 'Walter White, a chemistry teacher, discovers that he has cancer and decides to get into the meth-making business to repay his medical debts. His priorities begin to change when he partners with Jesse.', '10', networks[2], genres[1], callback);
         },
         function(callback) {
-          tvshowCreate("Squid Game", "Hundreds of cash-strapped contestants accept an invitation to compete in children's games for a tempting prize, but the stakes are deadly.", '4', networks[2], [genres[2],], callback);
+          tvshowCreate("Squid Game", "Hundreds of cash-strapped contestants accept an invitation to compete in children's games for a tempting prize, but the stakes are deadly.", '4', networks[2], genres[2], callback);
         }
         ],
         // optional callback
