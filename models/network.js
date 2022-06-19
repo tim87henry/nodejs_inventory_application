@@ -14,7 +14,7 @@ var NetworkSchema = new Schema(
 NetworkSchema
 .virtual('url')
 .get(function() {
-    return 'imdb/network/' + this._id;
+    return '/imdb/network/' + this._id;
 });
 
 module.exports = mongoose.model('Network', NetworkSchema);

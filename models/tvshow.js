@@ -16,7 +16,7 @@ var TvshowSchema = new Schema(
 TvshowSchema
 .virtual('url')
 .get(function() {
-    return 'imdb/tvshow/' + this._id;
+    return '/imdb/tvshow/' + this._id;
 });
 
 module.exports = mongoose.model('Tvshow', TvshowSchema);

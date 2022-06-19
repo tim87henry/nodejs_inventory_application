@@ -17,8 +17,28 @@ exports.tvshow_list = function(req, res) {
     res.send('NOT DONE YET: List of all TV shows');
 }
 
-exports.tvshow_detail = function(req, res) {
-    res.send('NOT DONE YET: Information about current TV show');
+exports.tvshow_detail = function(req, res, next) {
+    async.parallel({
+        tvshow: function(callback) {
+            Tvshow.findById(req.params.id)
+            .exec(callback)
+        },
+        genre: function(callback) {
+            var show = Tvshow.findById(req.params.id);
+            var genre_id = show.genre;
+            console.log("IT's "+genre_id)
+            Genre.findById(genre_id)
+            .exec(callback)
+        }
+    }, function(err, results) {
+        if (err) { return next(err)}
+        if (results.tvshow == null) {
+            var err = new Error("TV show not found");
+            err.status = 404;
+            return next(err);
+        }
+        res.render('tvshow_detail', {tvshow: results.tvshow, genre: results.genre})
+    });
 }
 
 exports.tvshow_create_get = function(req, res) {
