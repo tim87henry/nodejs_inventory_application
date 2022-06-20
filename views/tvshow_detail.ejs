@@ -13,6 +13,14 @@
     <br>
     Qty    : <%= tvshow.num_stock %>
     <br>
-    Genre  : <%= tvshow.genre %>
+    Genre  : <%= tvshow.genre.name %>
+    <br>
+    Network  : <%= tvshow.network.name %>
+    <br>
+    <div class="div">
+        <a href="<%= tvshow.url+'/update' %>"><button>Edit</button></a>   
+        <a href="<%= tvshow.url+'/delete' %>"><button>Delete</button></a> 
+    </div>
+    <a href="<%= tvshow.genre.url %>"><button><</button></a>
 </body>
 </html>

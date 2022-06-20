@@ -13,54 +13,56 @@ exports.index = function(req, res, next) {
     })
 }
 
+// not required
 exports.tvshow_list = function(req, res) {
     res.send('NOT DONE YET: List of all TV shows');
 }
 
 exports.tvshow_detail = function(req, res, next) {
-    async.parallel({
-        tvshow: function(callback) {
-            Tvshow.findById(req.params.id)
-            .exec(callback)
-        },
-        genre: function(callback) {
-            var show = Tvshow.findById(req.params.id);
-            var genre_id = show.genre;
-            console.log("IT's "+genre_id)
-            Genre.findById(genre_id)
-            .exec(callback)
-        }
-    }, function(err, results) {
+    Tvshow.findById(req.params.id)
+    .populate('genre')
+    .populate('network')
+    .exec(function(err, tvshow) {
         if (err) { return next(err)}
-        if (results.tvshow == null) {
+        if (tvshow == null) {
             var err = new Error("TV show not found");
             err.status = 404;
             return next(err);
         }
-        res.render('tvshow_detail', {tvshow: results.tvshow, genre: results.genre})
+        res.render('tvshow_detail', {tvshow: tvshow})
     });
 }
 
+//to do
 exports.tvshow_create_get = function(req, res) {
-    res.send('NOT DONE YET: TV show create get');
+    Genre.find({})
+    .exec(function(err, genre_list) {
+        if (err) { return next(err)}
+        res.render('tvshow_form', {title: 'Add a TV show', genres: genre_list, error: err})
+    })
 }
 
+//to do
 exports.tvshow_create_post = function(req, res) {
     res.send('NOT DONE YET: TV show create post');
 }
 
+//to do
 exports.tvshow_update_get = function(req, res) {
     res.send('NOT DONE YET: TV show update get');
 }
 
+//to do
 exports.tvshow_update_post = function(req, res) {
     res.send('NOT DONE YET: TV show update post');
 }
 
+//to do
 exports.tvshow_delete_get = function(req, res) {
     res.send('NOT DONE YET: TV show delete get');
 }
 
+//to do
 exports.tvshow_delete_post = function(req, res) {
     res.send('NOT DONE YET: TV show delete post');
 }

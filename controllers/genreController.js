@@ -2,6 +2,8 @@ var Genre = require('../models/genre');
 var Tvshows = require('../models/tvshow')
 var async = require('async');
 
+
+// done via index, in tvshow controller
 exports.genre_list = function(req, res) {
     res.send('NOT DONE YET: List of all Genres');
 }
@@ -27,26 +29,32 @@ exports.genre_detail = function(req, res, next) {
     });
 }
 
+//to do
 exports.genre_create_get = function(req, res) {
     res.send('NOT DONE YET: Genre create get');
 }
 
+//to do
 exports.genre_create_post = function(req, res) {
     res.send('NOT DONE YET: Genre create post');
 }
 
+//to do
 exports.genre_update_get = function(req, res) {
     res.send('NOT DONE YET: Genre update get');
 }
 
+//to do
 exports.genre_update_post = function(req, res) {
     res.send('NOT DONE YET: Genre update post');
 }
 
+//to do
 exports.genre_delete_get = function(req, res) {
     res.send('NOT DONE YET: Genre delete get');
 }
 
+//to do
 exports.genre_delete_post = function(req, res) {
     res.send('NOT DONE YET: Genre delete post');
 }
