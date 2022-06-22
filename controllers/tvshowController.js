@@ -33,28 +33,78 @@ exports.tvshow_detail = function(req, res, next) {
     });
 }
 
-//to do
-exports.tvshow_create_get = function(req, res) {
-    Genre.find({})
-    .exec(function(err, genre_list) {
-        if (err) { return next(err)}
-        res.render('tvshow_form', {title: 'Add a TV show', genres: genre_list, error: err})
-    })
+exports.tvshow_create_get = function(req, res, next) {
+    
+    async.parallel({
+        genre_list: function(callback) {
+            Genre.find({})
+            .exec(callback)
+        },
+        network_list: function(callback) {
+            Network.find({})
+            .exec(callback)
+        }
+    }, function( err, results) {
+            if (err) { return next(err)}
+            res.render('tvshow_form', {title: 'Add a TV show', genres: results.genre_list, networks: results.network_list, error: err})
+    });
 }
 
-//to do
-exports.tvshow_create_post = function(req, res) {
-    res.send('NOT DONE YET: TV show create post');
+exports.tvshow_create_post = function(req, res, next) {
+    var tvshow = new Tvshow(
+        {
+            name: req.body.name,
+            desc: req.body.desc,
+            genre: req.body.genre,
+            num_stock: req.body.num_stock,
+            network: req.body.network
+        }
+    );
+    tvshow.save(function(err) {
+        if (err) { return next(err)}
+        res.redirect(tvshow.url)
+    });
 }
 
 //to do
 exports.tvshow_update_get = function(req, res) {
-    res.send('NOT DONE YET: TV show update get');
+    async.parallel({
+        tvshow: function(callback) {
+            Tvshow.findById(req.params.id)
+            .populate('network')
+            .populate('genre')
+            .exec(callback)
+        },
+        genre_list: function(callback) {
+            Genre.find({})
+            .exec(callback)
+        },
+        network_list: function(callback) {
+            Network.find({})
+            .exec(callback)
+        }
+    }, function( err, results) {
+            if (err) { return next(err)}
+            res.render('tvshow_form', {title: 'Add a TV show', tvshow: results.tvshow, genres: results.genre_list, networks: results.network_list, error: err})
+    });
 }
 
 //to do
-exports.tvshow_update_post = function(req, res) {
-    res.send('NOT DONE YET: TV show update post');
+exports.tvshow_update_post = function(req, res, next) {
+    var tvshow = new Tvshow(
+        {
+            name: req.body.name,
+            desc: req.body.desc,
+            genre: req.body.genre,
+            num_stock: req.body.num_stock,
+            network: req.body.network,
+            _id: req.params.id
+        }
+    );
+    Tvshow.findByIdAndUpdate(req.params.id, tvshow, {}, function (err, show) {
+        if (err) { return next(err)}
+        res.redirect(tvshow.url);
+    });
 }
 
 //to do

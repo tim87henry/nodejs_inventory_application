@@ -11,17 +11,33 @@
     <form action="" method='POST'>
         <div>
             <label for="name">Name :</label>
-            <input name="name" id="name">
+            <input name="name" id="name" value="<%= typeof tvshow === 'undefined' ? '' : tvshow.name %>">
         </div>
         <div>
             <label for="desc">Description :</label>
-            <textarea name="desc" id="desc"></textarea>
+            <textarea name="desc" id="desc"><%= typeof tvshow === 'undefined' ? '' : tvshow.desc %></textarea>
+        </div>
+        <div>
+            <label for="num_stock">Num in stock :</label>
+            <input name="num_stock" id="num_stock" value="<%= typeof tvshow === 'undefined' ? '' : tvshow.num_stock %>">
         </div>
         <div>
             <label for="genre">Genre :</label>
             <select name="genre" id="genre">
                 <% genres.forEach( genre => { %>
-                    <option value=<%= genre._id %>><%= genre.name %></option>
+                    <% if(typeof tvshow === 'undefined') { %>
+                        <option value=<%= genre._id %>><%= genre.name %></option>
+                    <% } else { %>
+                        <option value="<%= genre._id %>" <%= (genre._id.toString() == tvshow.genre._id || genre._id.toString() == tvshow.genre) ? selected="selected": "" %>><%= genre.name %></option>
+                    <% }%>
+                <% }) %>
+            </select>
+        </div>
+        <div>
+            <label for="network">Genre :</label>
+            <select name="network" id="network">
+                <% networks.forEach( network => { %>
+                    <option value=<%= network._id %>><%= network.name %></option>
                 <% }) %>
             </select>
         </div>
