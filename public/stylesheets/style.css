@@ -6,3 +6,30 @@ body {
 a {
   color: #00B7FF;
 }
+
+.navbar {
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav_menu ul {
+  list-style: none;
+}
+
+.nav_menu ul li {
+  display: inline-block;
+  margin-left: 20px;
+}
+
+a:link, a:visited {
+  color: #22223a;
+}
+
+a:hover {
+  color: #7c7cd3;
+}
+
+a:active {
+  color: #4e4e88;
+}

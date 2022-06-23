@@ -32,10 +32,9 @@ router.post('/genre/:id/delete', genre_controller.genre_delete_post);
 // Network Routes
 
 router.get('/networks', network_controller.network_list);
-router.get('/network/:id', network_controller.network_detail);
 router.get('/network/create', network_controller.network_create_get);
 router.post('/network/create', network_controller.network_create_post);
-router.get('/genre/:id', genre_controller.genre_detail);
+router.get('/network/:id', network_controller.network_detail);
 router.get('/network/:id/update', network_controller.network_update_get);
 router.post('/network/:id/update', network_controller.network_update_post);
 router.get('/network/:id/delete', network_controller.network_delete_get);

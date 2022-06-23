@@ -25,36 +25,76 @@ exports.genre_detail = function(req, res, next) {
             err.status = 404;
             return next(err);
         }
-        res.render('genre_detail', {title: results.genre.name, genre_tvshows: results.genre_tvshows})
+        res.render('genre_detail', {title: results.genre.name, genre: results.genre, genre_tvshows: results.genre_tvshows})
     });
 }
 
-//to do
-exports.genre_create_get = function(req, res) {
-    res.send('NOT DONE YET: Genre create get');
+exports.genre_create_get = function(req, res, next) {
+    res.render('genre_form', {title: 'Add a Genre'})
 }
 
-//to do
-exports.genre_create_post = function(req, res) {
-    res.send('NOT DONE YET: Genre create post');
+exports.genre_create_post = function(req, res, next) {
+    var genre = new Genre(
+        {
+            name: req.body.name
+        }
+    );
+    genre.save(function(err) {
+        if (err) { return next(err)}
+        res.redirect(genre.url)
+    });
 }
 
-//to do
-exports.genre_update_get = function(req, res) {
-    res.send('NOT DONE YET: Genre update get');
+exports.genre_update_get = function(req, res, next) {
+    Genre.findById(req.params.id)
+    .exec(function(err, genre) {
+        if(err) { return next(err)}
+        res.render('genre_form',{title: 'Edit Genre', genre: genre});
+    })
 }
 
-//to do
-exports.genre_update_post = function(req, res) {
-    res.send('NOT DONE YET: Genre update post');
+exports.genre_update_post = function(req, res, next) {
+    var genre = new Genre(
+        {
+            name: req.body.name,
+            _id: req.params.id
+        }
+    );
+    Genre.findByIdAndUpdate(req.params.id, genre, {}, function (err, updatedgenre) {
+        if (err) { return next(err)}
+        res.redirect(updatedgenre.url);
+    });
 }
 
-//to do
-exports.genre_delete_get = function(req, res) {
-    res.send('NOT DONE YET: Genre delete get');
+exports.genre_delete_get = function(req, res, next) {
+    Genre.findById(req.params.id)
+    .exec(function(err, genre) {
+        if (err) { return next(err)}
+        if (genre == null) {
+            var err = new Error("Genre not found");
+            err.status = 404;
+            return next(err);
+        }
+        res.render('genre_delete', {title:'Delete Genre', genre: genre})
+    });
 }
 
-//to do
-exports.genre_delete_post = function(req, res) {
-    res.send('NOT DONE YET: Genre delete post');
+exports.genre_delete_post = function(req, res, next) {
+    if (req.body.cancel === 'cancel') {
+        Genre.findById(req.params.id)
+        .exec(function(err, genre) {
+        if (err) { return next(err)}
+        if (genre == null) {
+            var err = new Error("Genre not found");
+            err.status = 404;
+            return next(err);
+        }
+        res.redirect(genre.url)
+    });
+    } else if (req.body.delete === 'delete') {
+        Genre.findByIdAndRemove(req.params.id, function(err) {
+            if (err) { return next(err)}
+            res.redirect("/");
+        })
+    }
 }

@@ -2,12 +2,21 @@
 <html>
   <head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <%- include('head') -%>
   </head>
   <body>
-    <h1><%= title %></h1>
+    <nav class="navbar">
+      <h1><%= title %></h1>
+      <div class="nav_menu">
+        <ul>
+          <li class="nav_menu_item"><a href="/imdb/tvshow/create">Add TV Show</a></li>
+          <li class="nav_menu_item"><a href="/imdb/genre/create">Add Genre</a></li>
+          <li class="nav_menu_item"><a href="/imdb/networks">Networks</a></li>
+        </ul>
+      </div>
+    </nav>
     <p>Welcome to <%= title %></p>
-    <h1>List of Genres</h1>
+    <h2>List of Genres</h2>
     <% genres.forEach(genre => { %>
       <li><a href=<%= genre.url %>><%= genre.name %></a></li>
     <% }) %>

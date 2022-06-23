@@ -66,7 +66,6 @@ exports.tvshow_create_post = function(req, res, next) {
     });
 }
 
-//to do
 exports.tvshow_update_get = function(req, res) {
     async.parallel({
         tvshow: function(callback) {
@@ -85,11 +84,10 @@ exports.tvshow_update_get = function(req, res) {
         }
     }, function( err, results) {
             if (err) { return next(err)}
-            res.render('tvshow_form', {title: 'Add a TV show', tvshow: results.tvshow, genres: results.genre_list, networks: results.network_list, error: err})
+            res.render('tvshow_form', {title: 'Edit a TV show', tvshow: results.tvshow, genres: results.genre_list, networks: results.network_list, error: err})
     });
 }
 
-//to do
 exports.tvshow_update_post = function(req, res, next) {
     var tvshow = new Tvshow(
         {
@@ -107,12 +105,35 @@ exports.tvshow_update_post = function(req, res, next) {
     });
 }
 
-//to do
-exports.tvshow_delete_get = function(req, res) {
-    res.send('NOT DONE YET: TV show delete get');
+exports.tvshow_delete_get = function(req, res, next) {
+    Tvshow.findById(req.params.id)
+    .exec(function(err, tvshow) {
+        if (err) { return next(err)}
+        if (tvshow == null) {
+            var err = new Error("TV show not found");
+            err.status = 404;
+            return next(err);
+        }
+        res.render('tvshow_delete', {title:'Delete TV show',tvshow: tvshow})
+    });
 }
 
-//to do
-exports.tvshow_delete_post = function(req, res) {
-    res.send('NOT DONE YET: TV show delete post');
+exports.tvshow_delete_post = function(req, res, next) {
+    if (req.body.cancel === 'cancel') {
+        Tvshow.findById(req.params.id)
+        .exec(function(err, tvshow) {
+        if (err) { return next(err)}
+        if (tvshow == null) {
+            var err = new Error("TV show not found");
+            err.status = 404;
+            return next(err);
+        }
+        res.redirect(tvshow.url)
+    });
+    } else if (req.body.delete === 'delete') {
+        Tvshow.findByIdAndRemove(req.params.id, function(err) {
+            if (err) { return next(err)}
+            res.redirect("/");
+        })
+    }
 }
