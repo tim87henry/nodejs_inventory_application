@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title><%= title %> Network</title>
+    <%- include('head') -%>
+</head>
+<body>
+    Network :<%= title %>
+    <br>
+    Headquarters    : <%= network.location %>
+    <br>
+    <br><br>
+    <div class="div">
+        <a href="<%= network.url+'/update' %>"><button>Edit</button></a>   
+        <a href="<%= network.url+'/delete' %>"><button>Delete</button></a> 
+    </div>
+    <a href="/imdb/networks"><button><</button></a>
+</body>
+</html>

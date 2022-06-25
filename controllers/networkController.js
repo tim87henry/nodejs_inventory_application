@@ -1,6 +1,5 @@
 var Network = require('../models/network');
 
-// not required
 exports.network_list = function(req, res, next) {
     Network.find({})
     .sort({name: 1})
@@ -10,37 +9,77 @@ exports.network_list = function(req, res, next) {
     })
 }
 
-// probably not required
 exports.network_detail = function(req, res, next) {
-    res.send('NOT DONE YET: Information about current Network');
+    Network.findById(req.params.id)
+    .exec(function(err, network) {
+        if(err) { return next(err)}
+        res.render('network_detail',{title: network.name, network: network});
+    })
 }
 
-//to do
 exports.network_create_get = function(req, res, next) {
-    res.send('NOT DONE YET: Network create get');
+    res.render('network_form', {title: 'Add a Network'})
 }
 
-//to do
 exports.network_create_post = function(req, res, next) {
-    res.send('NOT DONE YET: Network create post');
+    var network = new Network(
+        {
+            name: req.body.name,
+            location: req.body.location
+        }
+    );
+    network.save(function(err) {
+        if (err) { return next(err)}
+        res.redirect(network.url)
+    })
 }
 
-//to do
 exports.network_update_get = function(req, res, next) {
-    res.send('NOT DONE YET: Network update get');
+    Network.findById(req.params.id)
+    .exec(function(err, network) {
+        if(err) { return next(err)}
+        res.render('network_form',{title: 'Edit Network', network: network});
+    })
 }
 
-//to do
 exports.network_update_post = function(req, res, next) {
-    res.send('NOT DONE YET: Network update post');
+    var network = new Network(
+        {
+            name: req.body.name,
+            location: req.body.location,
+            _id: req.params.id
+        }
+    );
+    Network.findByIdAndUpdate(req.params.id, network, {}, function (err, updatednetwork) {
+        if (err) { return next(err)}
+        res.redirect(updatednetwork.url);
+    });
 }
 
-//to do
 exports.network_delete_get = function(req, res, next) {
-    res.send('NOT DONE YET: Network delete get');
+    Network.findById(req.params.id)
+    .exec(function(err, network) {
+        if(err) { return next(err)}
+        res.render('network_delete',{title: 'Delete Network', network: network});
+    })
 }
 
-//to do
 exports.network_delete_post = function(req, res, next) {
-    res.send('NOT DONE YET: Network delete post');
+    if (req.body.cancel === 'cancel') {
+        Network.findById(req.params.id)
+        .exec(function(err, network) {
+        if (err) { return next(err)}
+        if (network == null) {
+            var err = new Error("Network not found");
+            err.status = 404;
+            return next(err);
+        }
+        res.redirect(network.url)
+    });
+    } else if (req.body.delete === 'delete') {
+        Network.findByIdAndRemove(req.params.id, function(err) {
+            if (err) { return next(err)}
+            res.redirect("/imdb/networks");
+        })
+    }
 }
