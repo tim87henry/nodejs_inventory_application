@@ -12,9 +12,9 @@
     <form action="" method="POST">
         <div>
             <label for="name">Name :</label>
-            <input name="name" id="name" value="<%= typeof genre === 'undefined' ? '' : genre.name %>">
+            <input name="name" id="name" class="form-control" value="<%= typeof genre === 'undefined' ? '' : genre.name %>">
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </body>
 </html>

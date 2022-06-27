@@ -67,15 +67,18 @@ exports.genre_update_post = function(req, res, next) {
 }
 
 exports.genre_delete_get = function(req, res, next) {
-    Genre.findById(req.params.id)
-    .exec(function(err, genre) {
-        if (err) { return next(err)}
-        if (genre == null) {
-            var err = new Error("Genre not found");
-            err.status = 404;
-            return next(err);
+    async.parallel({
+        genre: function(callback) {
+            Genre.findById(req.params.id)
+            .exec(callback)
+        },
+        tvshows: function(callback) {
+            Tvshows.find({genre: req.params.id})
+            .exec(callback)
         }
-        res.render('genre_delete', {title:'Delete Genre', genre: genre})
+    }, function(err, results) {
+        if (err) { return next(err)}
+        res.render('genre_delete', {title:'Delete Genre', genre: results.genre, tvshows: results.tvshows})
     });
 }
 

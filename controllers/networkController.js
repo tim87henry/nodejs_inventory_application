@@ -1,4 +1,6 @@
 var Network = require('../models/network');
+var Tvshows = require('../models/tvshow');
+var async = require('async');
 
 exports.network_list = function(req, res, next) {
     Network.find({})
@@ -57,11 +59,19 @@ exports.network_update_post = function(req, res, next) {
 }
 
 exports.network_delete_get = function(req, res, next) {
-    Network.findById(req.params.id)
-    .exec(function(err, network) {
-        if(err) { return next(err)}
-        res.render('network_delete',{title: 'Delete Network', network: network});
-    })
+    async.parallel({
+        network: function(callback) {
+            Network.findById(req.params.id)
+            .exec(callback)
+        },
+        tvshows: function(callback) {
+            Tvshows.find({network: req.params.id})
+            .exec(callback)
+        }
+    }, function(err, results) {
+        if (err) { return next(err)}
+        res.render('network_delete',{title: 'Delete Network', network: results.network, tvshows: results.tvshows});
+    });
 }
 
 exports.network_delete_post = function(req, res, next) {

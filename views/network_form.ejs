@@ -12,13 +12,13 @@
     <form action="" method="POST">
         <div>
             <label for="name">Name :</label>
-            <input name="name" id="name" value="<%= typeof network === 'undefined' ? '' : network.name %>">
+            <input name="name" id="name" class="form-control" value="<%= typeof network === 'undefined' ? '' : network.name %>">
         </div>
         <div>
             <label for="name">Headquarters :</label>
-            <input name="location" id="location" value="<%= typeof network === 'undefined' ? '' : network.location %>">
+            <input name="location" id="location" class="form-control" value="<%= typeof network === 'undefined' ? '' : network.location %>">
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </body>
 </html>

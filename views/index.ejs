@@ -7,7 +7,7 @@
   <body>
     <nav class="navbar">
       <h1><%= title %></h1>
-      <div class="nav_menu">
+      <div class="nav_menu appList">
         <ul>
           <li class="nav_menu_item"><a href="/imdb/tvshow/create">Add TV Show</a></li>
           <li class="nav_menu_item"><a href="/imdb/genre/create">Add Genre</a></li>
@@ -17,8 +17,10 @@
     </nav>
     <p>Welcome to <%= title %></p>
     <h2>List of Genres</h2>
-    <% genres.forEach(genre => { %>
-      <li><a href=<%= genre.url %>><%= genre.name %></a></li>
-    <% }) %>
+    <ul class="appList">
+      <% genres.forEach(genre => { %>
+        <li><a href=<%= genre.url %>><%= genre.name %></a></li>
+      <% }) %>
+    </ul>
   </body>
 </html>

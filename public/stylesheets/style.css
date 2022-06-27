@@ -13,17 +13,17 @@ a {
   justify-content: space-between;
 }
 
-.nav_menu ul {
-  list-style: none;
-}
-
 .nav_menu ul li {
   display: inline-block;
   margin-left: 20px;
 }
 
+a {
+  font-size: 17px;
+}
+
 a:link, a:visited {
-  color: #22223a;
+  color: #0f0f58;
 }
 
 a:hover {
@@ -32,4 +32,8 @@ a:hover {
 
 a:active {
   color: #4e4e88;
+}
+
+.appList {
+  list-style: none;
 }

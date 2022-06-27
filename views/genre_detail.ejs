@@ -8,16 +8,17 @@
     <%- include('head') -%>
 </head>
 <body>
-    Info about <%= title %> Genre
     <h1>List of Genres' TV shows</h1>
-    <% genre_tvshows.forEach(tvshow => { %>
-      <li><a href=<%= tvshow.url %>><%= tvshow.name %></a></li>
-    <% }) %>
+    <ul class="appList">
+        <% genre_tvshows.forEach(tvshow => { %>
+        <li><a href=<%= tvshow.url %>><%= tvshow.name %></a></li>
+        <% }) %>
+    </ul>
     <br><br>
     <div class="div">
-        <a href="<%= genre.url+'/update' %>"><button>Edit</button></a>   
-        <a href="<%= genre.url+'/delete' %>"><button>Delete</button></a> 
+        <a href="<%= genre.url+'/update' %>"><button class="btn btn-primary">Edit</button></a>   
+        <a href="<%= genre.url+'/delete' %>"><button class="btn btn-primary">Delete</button></a> 
     </div>
-    <a href="/"><button><</button></a>
+    <div><a href="/"><button class="btn btn-primary"><</button></a></div>
 </body>
 </html>

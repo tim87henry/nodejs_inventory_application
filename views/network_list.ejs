@@ -14,8 +14,10 @@
         </ul>
       </div>
     </nav>
-    <% networks.forEach(network => { %>
-      <li><a href=<%= network.url %>><%= network.name %></a></li>
-    <% }) %>
+    <ul class="appList">
+        <% networks.forEach(network => { %>
+          <li><a href=<%= network.url %>><%= network.name %></a></li>
+        <% }) %>
+    </ul>
   </body>
 </html>

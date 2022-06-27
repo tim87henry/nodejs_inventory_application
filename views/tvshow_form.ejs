@@ -12,24 +12,24 @@
     <form action="" method='POST'>
         <div>
             <label for="name">Name :</label>
-            <input name="name" id="name" value="<%= typeof tvshow === 'undefined' ? '' : tvshow.name %>">
+            <input name="name" id="name" class="form-control" value="<%= typeof tvshow === 'undefined' ? '' : tvshow.name %>">
         </div>
         <div>
             <label for="desc">Description :</label>
-            <textarea name="desc" id="desc"><%= typeof tvshow === 'undefined' ? '' : tvshow.desc %></textarea>
+            <textarea name="desc" id="desc" class="form-control"><%= typeof tvshow === 'undefined' ? '' : tvshow.desc %></textarea>
         </div>
         <div>
             <label for="num_stock">Num in stock :</label>
-            <input name="num_stock" id="num_stock" value="<%= typeof tvshow === 'undefined' ? '' : tvshow.num_stock %>">
+            <input name="num_stock" id="num_stock" class="form-control" value="<%= typeof tvshow === 'undefined' ? '' : tvshow.num_stock %>">
         </div>
         <div>
             <label for="genre">Genre :</label>
             <select name="genre" id="genre">
                 <% genres.forEach( genre => { %>
                     <% if(typeof tvshow === 'undefined') { %>
-                        <option value=<%= genre._id %>><%= genre.name %></option>
+                        <option class="form-control" value=<%= genre._id %>><%= genre.name %></option>
                     <% } else { %>
-                        <option value="<%= genre._id %>" <%= (genre._id.toString() == tvshow.genre._id || genre._id.toString() == tvshow.genre) ? selected="selected": "" %>><%= genre.name %></option>
+                        <option class="form-control" value="<%= genre._id %>" <%= (genre._id.toString() == tvshow.genre._id || genre._id.toString() == tvshow.genre) ? selected="selected": "" %>><%= genre.name %></option>
                     <% }%>
                 <% }) %>
             </select>
@@ -38,11 +38,11 @@
             <label for="network">Genre :</label>
             <select name="network" id="network">
                 <% networks.forEach( network => { %>
-                    <option value=<%= network._id %>><%= network.name %></option>
+                    <option class="form-control" value=<%= network._id %>><%= network.name %></option>
                 <% }) %>
             </select>
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </body>
 </html>

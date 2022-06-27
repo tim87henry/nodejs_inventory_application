@@ -8,10 +8,23 @@
     <%- include('head') -%>
 </head>
 <body>
-    <h2>Do you want to delete <%= genre.name %>?</h2>
-    <form action="" method="POST">
-        <button id="cancel" name="cancel" value="cancel">Cancel</button>
-        <button id="delete" name="delete" value="delete">Delete</button>
-    </form>
+    <% if (tvshows.length === 0) { %>
+        <h2>Do you want to delete <%= genre.name %>?</h2>
+        <form action="" method="POST">
+            <button id="cancel" name="cancel" value="cancel" class="btn btn-primary">Cancel</button>
+            <button id="delete" name="delete" value="delete" class="btn btn-primary">Delete</button>
+        </form>
+    <% } else { %>
+        <h2>Please delete the following <%= genre.name %> tvshows first</h2>
+        <ul class="appList">
+            <% tvshows.forEach( tvshow => { %>
+                <li><div>
+                    <h3><a href=<%= tvshow.url %>><%= tvshow.name %></a></h3>
+                    <p><%= tvshow.desc %></p>
+                </div></li>
+            <% }) %>
+        </ul>
+        <a href=<%= genre.url %>><button class="btn btn-primary"><</button></a>
+    <% } %>
 </body>
 </html>
