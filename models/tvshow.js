@@ -8,7 +8,8 @@ var TvshowSchema = new Schema(
         desc: {type: String},
         genre: {type: Schema.Types.ObjectId, ref: 'Genre', required: true},
         network: {type: Schema.Types.ObjectId, ref: 'Network', required: true},
-        num_stock: {type: Number, required: true}
+        num_stock: {type: Number, required: true},
+        image: {type: String, required: true}
     }
 )
 

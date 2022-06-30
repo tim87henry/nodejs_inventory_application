@@ -37,3 +37,8 @@ a:active {
 .appList {
   list-style: none;
 }
+
+.tvshow_image {
+  height: 600px;
+  width: 500px;
+}

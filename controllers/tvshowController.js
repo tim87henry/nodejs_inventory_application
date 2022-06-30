@@ -57,7 +57,8 @@ exports.tvshow_create_post = function(req, res, next) {
             desc: req.body.desc,
             genre: req.body.genre,
             num_stock: req.body.num_stock,
-            network: req.body.network
+            network: req.body.network,
+            image: req.file.filename
         }
     );
     tvshow.save(function(err) {
@@ -95,6 +96,7 @@ exports.tvshow_update_post = function(req, res, next) {
             desc: req.body.desc,
             genre: req.body.genre,
             num_stock: req.body.num_stock,
+            image: req.file.filename,
             network: req.body.network,
             _id: req.params.id
         }

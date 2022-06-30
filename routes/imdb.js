@@ -1,5 +1,7 @@
 var express = require('express');
 var router = express.Router();
+const multer  = require('multer')
+const upload = multer({ dest: 'public/images' })
 
 // Controller modules
 var tvshow_controller = require('../controllers/tvshowController');
@@ -11,10 +13,10 @@ var network_controller = require('../controllers/networkController');
 router.get('/', tvshow_controller.index);
 router.get('/tvshows', tvshow_controller.tvshow_list);
 router.get('/tvshow/create', tvshow_controller.tvshow_create_get);
-router.post('/tvshow/create', tvshow_controller.tvshow_create_post);
+router.post('/tvshow/create', upload.single('image'), tvshow_controller.tvshow_create_post);
 router.get('/tvshow/:id', tvshow_controller.tvshow_detail);
 router.get('/tvshow/:id/update', tvshow_controller.tvshow_update_get);
-router.post('/tvshow/:id/update', tvshow_controller.tvshow_update_post);
+router.post('/tvshow/:id/update', upload.single('image'), tvshow_controller.tvshow_update_post);
 router.get('/tvshow/:id/delete', tvshow_controller.tvshow_delete_get);
 router.post('/tvshow/:id/delete', tvshow_controller.tvshow_delete_post);
 
