@@ -100,6 +100,40 @@ exports.genre_update_post = function(req, res, next) {
     });
 }
 
+exports.genre_delete_get_auth = function(req, res, next) {
+    res.render('authentication_form', {title: 'Delete a Genre'})
+}
+
+exports.genre_delete_post_auth = function(req, res, next) {
+    if (req.body.cancel === 'cancel') {
+        Genre.findById(req.params.id)
+        .exec(function(err, genre) {
+        if (err) { return next(err)}
+        if (genre == null) {
+            var err = new Error("Genre not found");
+            err.status = 404;
+            return next(err);
+        }
+        res.redirect(genre.url)
+    });
+    } else if (req.body.submit === 'submit') {
+        if (req.body.username === 'admin' && req.body.password === 'nimda') {
+            res.redirect('/imdb/genre/'+req.params.id+'/delete')
+        } else {
+            Genre.findById(req.params.id)
+            .exec(function(err, genre) {
+                if (err) { return next(err)}
+                if (genre == null) {
+                    var err = new Error("Genre not found");
+                    err.status = 404;
+                    return next(err);
+                }
+                res.render('authentication_failure', {url: genre.url});
+            });
+        }
+    }
+}
+
 exports.genre_delete_get = function(req, res, next) {
     async.parallel({
         genre: function(callback) {

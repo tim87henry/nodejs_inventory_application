@@ -67,6 +67,40 @@ exports.tvshow_create_post = function(req, res, next) {
     });
 }
 
+exports.tvshow_update_get_auth = function(req, res, next) {
+    res.render('authentication_form', {title: 'Add a TV Show'})
+}
+
+exports.tvshow_update_post_auth = function(req, res, next) {
+    if (req.body.cancel === 'cancel') {
+        Tvshow.findById(req.params.id)
+        .exec(function(err, tvshow) {
+        if (err) { return next(err)}
+        if (tvshow == null) {
+            var err = new Error("Tv show not found");
+            err.status = 404;
+            return next(err);
+        }
+        res.redirect(tvshow.url)
+    });
+    } else if (req.body.submit === 'submit') {
+        if (req.body.username === 'admin' && req.body.password === 'nimda') {
+            res.redirect('/imdb/tvshow/'+req.params.id+'/update')
+        } else {
+            Tvshow.findById(req.params.id)
+            .exec(function(err, tvshow) {
+                if (err) { return next(err)}
+                if (tvshow == null) {
+                    var err = new Error("TV show not found");
+                    err.status = 404;
+                    return next(err);
+                }
+                res.render('authentication_failure', {url: tvshow.url});
+            });
+        }
+    }
+}
+
 exports.tvshow_update_get = function(req, res) {
     async.parallel({
         tvshow: function(callback) {
@@ -105,6 +139,40 @@ exports.tvshow_update_post = function(req, res, next) {
         if (err) { return next(err)}
         res.redirect(tvshow.url);
     });
+}
+
+exports.tvshow_delete_get_auth = function(req, res, next) {
+    res.render('authentication_form', {title: 'Delete a TV show'})
+}
+
+exports.tvshow_delete_post_auth = function(req, res, next) {
+    if (req.body.cancel === 'cancel') {
+        Tvshow.findById(req.params.id)
+        .exec(function(err, tvshow) {
+        if (err) { return next(err)}
+        if (tvshow == null) {
+            var err = new Error("TV show not found");
+            err.status = 404;
+            return next(err);
+        }
+        res.redirect(tvshow.url)
+    });
+    } else if (req.body.submit === 'submit') {
+        if (req.body.username === 'admin' && req.body.password === 'nimda') {
+            res.redirect('/imdb/tvshow/'+req.params.id+'/delete')
+        } else {
+            Tvshow.findById(req.params.id)
+            .exec(function(err, tvshow) {
+                if (err) { return next(err)}
+                if (tvshow == null) {
+                    var err = new Error("TV show not found");
+                    err.status = 404;
+                    return next(err);
+                }
+                res.render('authentication_failure', {url: tvshow.url});
+            });
+        }
+    }
 }
 
 exports.tvshow_delete_get = function(req, res, next) {

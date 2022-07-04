@@ -36,6 +36,40 @@ exports.network_create_post = function(req, res, next) {
     })
 }
 
+exports.network_update_get_auth = function(req, res, next) {
+    res.render('authentication_form', {title: 'Add a Network'})
+}
+
+exports.network_update_post_auth = function(req, res, next) {
+    if (req.body.cancel === 'cancel') {
+        Network.findById(req.params.id)
+        .exec(function(err, network) {
+        if (err) { return next(err)}
+        if (network == null) {
+            var err = new Error("Network not found");
+            err.status = 404;
+            return next(err);
+        }
+        res.redirect(network.url)
+    });
+    } else if (req.body.submit === 'submit') {
+        if (req.body.username === 'admin' && req.body.password === 'nimda') {
+            res.redirect('/imdb/network/'+req.params.id+'/update')
+        } else {
+            Network.findById(req.params.id)
+            .exec(function(err, network) {
+                if (err) { return next(err)}
+                if (network == null) {
+                    var err = new Error("Network not found");
+                    err.status = 404;
+                    return next(err);
+                }
+                res.render('authentication_failure', {url: network.url});
+            });
+        }
+    }
+}
+
 exports.network_update_get = function(req, res, next) {
     Network.findById(req.params.id)
     .exec(function(err, network) {
@@ -56,6 +90,40 @@ exports.network_update_post = function(req, res, next) {
         if (err) { return next(err)}
         res.redirect(updatednetwork.url);
     });
+}
+
+exports.network_delete_get_auth = function(req, res, next) {
+    res.render('authentication_form', {title: 'Delete a Network'})
+}
+
+exports.network_delete_post_auth = function(req, res, next) {
+    if (req.body.cancel === 'cancel') {
+        Network.findById(req.params.id)
+        .exec(function(err, network) {
+        if (err) { return next(err)}
+        if (network == null) {
+            var err = new Error("Network not found");
+            err.status = 404;
+            return next(err);
+        }
+        res.redirect(network.url)
+    });
+    } else if (req.body.submit === 'submit') {
+        if (req.body.username === 'admin' && req.body.password === 'nimda') {
+            res.redirect('/imdb/network/'+req.params.id+'/delete')
+        } else {
+            Network.findById(req.params.id)
+            .exec(function(err, network) {
+                if (err) { return next(err)}
+                if (network == null) {
+                    var err = new Error("Network not found");
+                    err.status = 404;
+                    return next(err);
+                }
+                res.render('authentication_failure', {url: network.url});
+            });
+        }
+    }
 }
 
 exports.network_delete_get = function(req, res, next) {
