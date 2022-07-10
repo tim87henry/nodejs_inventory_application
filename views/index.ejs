@@ -15,8 +15,6 @@
         </ul>
       </div>
     </nav>
-    <p>Welcome to <%= title %></p>
-    <h2>List of Genres</h2>
     <ul class="appList">
       <% genres.forEach(genre => { %>
         <li><a href=<%= genre.url %>><%= genre.name %></a></li>

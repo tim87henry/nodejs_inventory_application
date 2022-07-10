@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title><%= tvshow.name %> TV show</title>
+    <title><%= tvshow.name %></title>
     <%- include('head') -%>
 </head>
 <body>
-    <h3>Info about <%= tvshow.name %> TV show</h3>
+    <h3><%= tvshow.name %></h3>
     <br><br>
     Desc   : <%= tvshow.desc %>
     <br>
@@ -18,7 +18,7 @@
     <br>
     Network  : <%= tvshow.network.name %>
     <br>
-    <img class="tvshow_image" src="/images/<%= tvshow.image %>"
+    <img class="tvshow_image" src="/images/<%= tvshow.image %>">
     <div class="div">
         <a href="<%= tvshow.url+'/updateAuth' %>"><button class="btn btn-primary">Edit</button></a>   
         <a href="<%= tvshow.url+'/deleteAuth' %>"><button class="btn btn-primary">Delete</button></a> 

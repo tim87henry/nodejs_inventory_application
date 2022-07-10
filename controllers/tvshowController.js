@@ -9,7 +9,7 @@ exports.index = function(req, res, next) {
     .sort({name: 1})
     .exec(function(err, genre_list) {
         if (err) { return next(err)}
-        res.render('index', {title: 'TV Show database home', genres: genre_list, error: err})
+        res.render('index', {title: 'TV Show database', genres: genre_list, error: err})
     })
 }
 
@@ -58,7 +58,7 @@ exports.tvshow_create_post = function(req, res, next) {
             genre: req.body.genre,
             num_stock: req.body.num_stock,
             network: req.body.network,
-            image: req.file.filename
+            image: typeof req.file === 'undefined' ? '' : req.file.filename
         }
     );
     tvshow.save(function(err) {
@@ -124,13 +124,29 @@ exports.tvshow_update_get = function(req, res) {
 }
 
 exports.tvshow_update_post = function(req, res, next) {
+    var new_image;
+    if (req.file === undefined) {
+        Tvshow.findById(req.params.id)
+        .exec(function(err, tvshow) {
+            if (err) { return next(err)}
+            if (tvshow == null) {
+                var err = new Error("TV show not found");
+                err.status = 404;
+                return next(err);
+            } else {
+                new_image = tvshow.image;
+            }
+        });
+    } else {
+        new_image = req.file.filename;
+    }
     var tvshow = new Tvshow(
         {
             name: req.body.name,
             desc: req.body.desc,
             genre: req.body.genre,
             num_stock: req.body.num_stock,
-            image: req.file.filename,
+            image: new_image,
             network: req.body.network,
             _id: req.params.id
         }
